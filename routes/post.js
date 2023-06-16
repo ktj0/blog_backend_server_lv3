@@ -156,6 +156,7 @@ router.delete("/posts/:_postId", async (req, res) => {
 
     await postDb.deleteOne({ _id: _postId });
 
+    //게시글을 삭제하면 해당 댓글도 같이 삭제
     await commentDb.deleteMany({ _postId });
 
     res.status(200).json({ message: "게시글을 삭제하였습니다." });
