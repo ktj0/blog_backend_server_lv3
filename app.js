@@ -15,10 +15,6 @@ app.get("/", (req, res) => {
   res.send("Post Project");
 });
 
-app.use((req, res) => {
-  res.status(400).json({ message: "데이터 형식이 올바르지 않습니다." });
-});
-
 app.listen(port, () => {
   console.log(port, "포르톨 서버가 열렸습니다.");
 });
