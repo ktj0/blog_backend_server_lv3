@@ -7,11 +7,7 @@ const commentDb = require("..//schemas/comment.js");
 //게시글 작성
 router.post("/posts", async (req, res) => {
   try {
-    //mongoDB에서 schema type을 Date로 지정하면 날짜가 UTC기준으로 설정이 된다.
-    //type이 Date면 moment나 다른 메서드를 사용해도 mongoDB에서 자체적으로 UTC로 바꾸는거 같아서
-    //한국시간보다 9시간 전이여서 그냥 시간 자체에 9를 더했다.
     const createdAt = new Date();
-    createdAt.setHours(createdAt.getHours() + 9);
 
     const { user, password, title, content } = req.body;
 
@@ -59,8 +55,6 @@ router.get("/posts/:_postId", async (req, res) => {
   try {
     const { _postId } = req.params;
 
-    //find를 사용하면 배열로 나와서
-    //_id값이 unique한 값이라 하나밖에 없기 때문에 findOne을 사용했다.
     const detailPost = await postDb.findOne({ _id: _postId });
 
     if (!detailPost) {
@@ -90,7 +84,6 @@ router.put("/posts/:_postId", async (req, res) => {
   try {
     //수정된 날짜
     const updatedAt = new Date();
-    updatedAt.setHours(updatedAt.getHours() + 9);
 
     const { _postId } = req.params;
     const { password, title, content } = req.body;
@@ -102,9 +95,6 @@ router.put("/posts/:_postId", async (req, res) => {
 
     const detailPost = await postDb.findOne({ _id: _postId });
 
-    //existPwd는 findOne으로 조건을 두 개 주었는데 password 하나로만 find하면
-    //params에 수정할 게시글의 id값을 주고 다른 게시물의 비밀번호를 입력하면
-    //비밀번호를 입력한 게시글이 수정이 되어서 두 개의 조건 모두 충족하는지를 본다.
     const existPwd = await postDb.findOne({ _id: _postId, password });
 
     if (!detailPost) {

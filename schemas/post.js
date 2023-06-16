@@ -8,7 +8,6 @@ const postsSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    unique: true,
   },
   title: {
     type: String,
