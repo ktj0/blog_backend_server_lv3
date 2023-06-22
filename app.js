@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+
 const connect = require("./schemas");
 const routes = require("./routes");
 
@@ -8,6 +10,8 @@ const port = 3000;
 connect();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use("/api", routes);
 
