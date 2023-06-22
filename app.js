@@ -1,15 +1,15 @@
 const express = require("express");
+const connect = require("./schemas");
+const routes = require("./routes");
+
 const app = express();
 const port = 3000;
-
-const connect = require("./schemas");
-const postRouter = require("./routes/post.js");
-const commentRouter = require("./routes/comment.js");
 
 connect();
 
 app.use(express.json());
-app.use("/api", [postRouter, commentRouter]);
+
+app.use("/api", routes);
 
 app.get("/", (req, res) => {
   res.send("Blog Project");

@@ -1,29 +1,33 @@
 const mongoose = require("mongoose");
 
-const commentsSchema = new mongoose.Schema({
-  _postId: {
-    type: String,
-    required: true,
+const commentSchema = new mongoose.Schema(
+  {
+    postId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+    user: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
   },
-  user: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-  },
-});
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
-module.exports = mongoose.model("comment_db", commentsSchema);
+commentSchema.virtual("commentId").get(function () {
+  return this._id.toHexString();
+});
+commentSchema.set("toJSON", { virtuals: true });
+
+module.exports = mongoose.model("Comment", commentSchema);
