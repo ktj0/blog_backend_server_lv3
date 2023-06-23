@@ -10,6 +10,7 @@ const port = 3000;
 connect();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 

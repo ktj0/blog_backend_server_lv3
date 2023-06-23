@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../schemas/user.js");
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   const { Authorization } = req.cookies;
   const [authType, authToken] = (Authorization ?? "").split(" ");
 
   if (!authToken || authType !== "Bearer") {
-    res.status(400).json({ errorMessage: "로그인 후 이용 가능한 기능입니다." });
+    res.status(403).json({ errorMessage: "로그인이 필요한 기능입니다." });
     return;
   }
 
@@ -20,6 +20,8 @@ module.exports = async (req, res) => {
     next();
   } catch (err) {
     console.error(err);
-    res.status(400).json({ errorMessage: "로그인 후 이용 가능한 기능입니다." });
+    res
+      .status(403)
+      .json({ errorMessage: "전달된 쿠키에서 오류가 발생하였습니다." });
   }
 };

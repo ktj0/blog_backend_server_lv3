@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: String,
       required: true,
     },
-    password: {
+    nickname: {
       type: String,
       required: true,
     },

@@ -1,6 +1,7 @@
 const express = require("express");
-const User = require("../schemas/user.js");
 const jwt = require("jsonwebtoken");
+
+const User = require("../schemas/user.js");
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.route("/").post(async (req, res) => {
 
     const token = jwt.sign({ userId: user.userId }, "customized-secret-key");
 
-    res.cookie("Authrization", `Bearer ${token}`);
+    res.cookie("Authorization", `Bearer ${token}`);
     res.status(200).json({ token });
   } catch (err) {
     console.error(err);

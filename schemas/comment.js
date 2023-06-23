@@ -4,17 +4,18 @@ const commentSchema = new mongoose.Schema(
   {
     postId: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
       ref: "Post",
     },
-    user: {
+    userId: {
       type: String,
       required: true,
     },
-    password: {
+    nickname: {
       type: String,
       required: true,
     },
-    content: {
+    comment: {
       type: String,
       required: true,
     },
